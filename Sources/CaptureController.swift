@@ -50,19 +50,12 @@ class CaptureController {
             // Perform OCR
             let recognizedText = try await ocrService.recognizeText(in: image)
 
-            // Copy to clipboard
+            // Copy to clipboard - simple and fast, no popup
             clipboardService.copyToClipboard(recognizedText)
 
-            // Show HUD
-            if PreferencesStore.shared.showHUD {
-                HUDController.shared.show(
-                    message: "Copied \(recognizedText.count) characters",
-                    duration: 2.0
-                )
-            }
-
         } catch {
-            showError("Failed to capture: \(error.localizedDescription)")
+            // Silent fail - just don't crash
+            print("Capture failed: \(error.localizedDescription)")
         }
     }
 

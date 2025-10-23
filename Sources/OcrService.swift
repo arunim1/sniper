@@ -3,11 +3,11 @@ import CoreImage
 import AppKit
 
 class OcrService {
-    private let preferencesStore: PreferencesStore
+    init() {}
 
-    init(preferencesStore: PreferencesStore) {
-        self.preferencesStore = preferencesStore
-    }
+    // Default settings - fast and simple
+    private let recognitionLevel: VNRequestTextRecognitionLevel = .accurate
+    private let languages = ["en-US"]
 
     func recognizeText(in image: CGImage) async throws -> String {
         return try await withCheckedThrowingContinuation { continuation in
@@ -26,15 +26,9 @@ class OcrService {
                 continuation.resume(returning: recognizedText)
             }
 
-            // Configure recognition level
-            if preferencesStore.recognitionLevel == "fast" {
-                request.recognitionLevel = .fast
-            } else {
-                request.recognitionLevel = .accurate
-            }
-
-            // Configure languages
-            request.recognitionLanguages = preferencesStore.ocrLanguages
+            // Configure recognition
+            request.recognitionLevel = self.recognitionLevel
+            request.recognitionLanguages = self.languages
             request.usesLanguageCorrection = true
 
             // Perform request
@@ -112,12 +106,8 @@ class OcrService {
         // Post-process
         result = result.map { processLine($0) }
 
-        // Join lines
-        if preferencesStore.preserveLineBreaks {
-            return result.joined(separator: "\n")
-        } else {
-            return result.joined(separator: " ")
-        }
+        // Join lines - always preserve line breaks
+        return result.joined(separator: "\n")
     }
 
     private func processLine(_ line: String) -> String {

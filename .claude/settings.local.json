@@ -3,7 +3,8 @@
     "allow": [
       "Bash(awk '{print $9, $5}')",
       "Bash(swift package generate-xcodeproj)",
-      "Bash(swift build)"
+      "Bash(swift build)",
+      "Bash(killall SnipIt)"
     ],
     "deny": [],
     "ask": []
