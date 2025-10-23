@@ -1,0 +1,58 @@
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Build products
+*.app
+*.dSYM.zip
+*.dSYM
+*.dmg
+
+# Signing
+*.cer
+*.p12
+*.mobileprovision
+*.provisionprofile
+
+# DerivedData
+DerivedData/
+
+# CocoaPods (if needed later)
+Pods/
+
+# Sparkle
+appcast.xml
+*.delta
+
+# License keys (for testing)
+test_license.txt
+
+# Temporary files
+*.swp
+*.swo
+*~
+.#*
+
+# IDEs
+.vscode/
+.idea/
+*.xcworkspace/
+
+# Environment
+.env
+.env.local

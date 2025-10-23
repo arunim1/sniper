@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{print $9, $5}')",
+      "Bash(swift package generate-xcodeproj)",
+      "Bash(swift build)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
