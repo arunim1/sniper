@@ -1,20 +1,20 @@
 #!/bin/bash
 set -e
 
-echo "🔨 Building SnipIt..."
+echo "🔨 Building Sniper..."
 
 # Build the executable
 swift build -c release
 
 # Create .app bundle structure
-APP_NAME="SnipIt.app"
+APP_NAME="Sniper.app"
 APP_DIR="$APP_NAME/Contents"
 rm -rf "$APP_NAME"
 mkdir -p "$APP_DIR/MacOS"
 mkdir -p "$APP_DIR/Resources"
 
 # Copy executable
-cp .build/release/SnipIt "$APP_DIR/MacOS/SnipIt"
+cp .build/release/Sniper "$APP_DIR/MacOS/Sniper"
 
 # Create Info.plist
 cat > "$APP_DIR/Info.plist" << 'EOF'
@@ -23,11 +23,11 @@ cat > "$APP_DIR/Info.plist" << 'EOF'
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>SnipIt</string>
+    <string>Sniper</string>
     <key>CFBundleIdentifier</key>
-    <string>com.snipit.SnipIt</string>
+    <string>com.sniper.Sniper</string>
     <key>CFBundleName</key>
-    <string>SnipIt</string>
+    <string>Sniper</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -41,18 +41,18 @@ cat > "$APP_DIR/Info.plist" << 'EOF'
     <key>NSHumanReadableCopyright</key>
     <string>Copyright © 2025. All rights reserved.</string>
     <key>NSScreenCaptureDescription</key>
-    <string>SnipIt needs permission to capture regions of your screen for OCR.</string>
+    <string>Sniper needs permission to capture regions of your screen for OCR.</string>
 </dict>
 </plist>
 EOF
 
-echo "✅ SnipIt.app created!"
+echo "✅ Sniper.app created!"
 echo ""
 echo "To install:"
-echo "  cp -r SnipIt.app /Applications/"
+echo "  cp -r Sniper.app /Applications/"
 echo ""
 echo "To run:"
-echo "  open SnipIt.app"
+echo "  open Sniper.app"
 echo ""
 echo "To add to login items:"
-echo "  System Settings → General → Login Items → Add SnipIt.app"
+echo "  System Settings → General → Login Items → Add Sniper.app"

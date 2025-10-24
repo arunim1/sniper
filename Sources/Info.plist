@@ -7,11 +7,11 @@
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
-    <string>com.snipit.SnipIt</string>
+    <string>com.sniper.Sniper</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>SnipIt</string>
+    <string>Sniper</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -23,9 +23,9 @@
     <key>LSUIElement</key>
     <true/>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2025 SnipIt. All rights reserved.</string>
+    <string>Copyright © 2025 Sniper. All rights reserved.</string>
     <key>NSScreenCaptureDescription</key>
-    <string>SnipIt needs permission to capture regions of your screen for OCR text recognition. All processing happens locally on your device.</string>
+    <string>Sniper needs permission to capture regions of your screen for OCR text recognition. All processing happens locally on your device.</string>
     <key>NSSupportsAutomaticTermination</key>
     <false/>
     <key>NSSupportsSuddenTermination</key>

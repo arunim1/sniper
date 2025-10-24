@@ -8,7 +8,8 @@
       "Bash(chmod +x build_app.sh)",
       "Bash(./build_app.sh)",
       "Read(//Applications/**)",
-      "Bash(launchctl list:*)"
+      "Bash(launchctl list:*)",
+      "Bash(launchctl unload:*)"
     ],
     "deny": [],
     "ask": []

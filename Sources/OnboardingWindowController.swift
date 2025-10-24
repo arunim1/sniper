@@ -10,7 +10,7 @@ class OnboardingWindowController: NSWindowController {
             backing: .buffered,
             defer: false
         )
-        window.title = "Welcome to SnipIt"
+        window.title = "Welcome to Sniper"
         window.center()
 
         let hostingView = NSHostingView(rootView: OnboardingView())
@@ -28,7 +28,7 @@ struct OnboardingView: View {
     let pages = [
         OnboardingPage(
             icon: "doc.text.viewfinder",
-            title: "Welcome to SnipIt",
+            title: "Welcome to Sniper",
             description: "Capture and OCR any text on your screen instantly with a simple keyboard shortcut.",
             primaryAction: "Next"
         ),
@@ -47,7 +47,7 @@ struct OnboardingView: View {
         OnboardingPage(
             icon: "checklist",
             title: "Permission Required",
-            description: "SnipIt needs Screen Recording permission to capture regions of your screen for OCR.",
+            description: "Sniper needs Screen Recording permission to capture regions of your screen for OCR.",
             primaryAction: "Grant Permission"
         )
     ]
@@ -142,7 +142,7 @@ struct OnboardingView: View {
                             .font(.caption)
                         Text("2. Open System Settings > Privacy & Security > Screen Recording")
                             .font(.caption)
-                        Text("3. Enable SnipIt in the list")
+                        Text("3. Enable Sniper in the list")
                             .font(.caption)
                         Text("4. Return here and click 'Test Capture'")
                             .font(.caption)
@@ -193,7 +193,7 @@ struct OnboardingView: View {
         PreferencesStore.shared.hasCompletedOnboarding = true
 
         // Close window
-        if let window = NSApp.windows.first(where: { $0.title == "Welcome to SnipIt" }) {
+        if let window = NSApp.windows.first(where: { $0.title == "Welcome to Sniper" }) {
             window.close()
         }
     }

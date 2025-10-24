@@ -52,7 +52,7 @@ struct LicenseView: View {
                         .font(.system(size: 48))
                         .foregroundColor(.green)
 
-                    Text("SnipIt is Licensed")
+                    Text("Sniper is Licensed")
                         .font(.title2)
                         .bold()
 
@@ -155,7 +155,7 @@ struct LicenseView: View {
 
     private func purchaseLicense() {
         // Open Gumroad purchase page
-        if let url = URL(string: "https://gumroad.com/l/snipit") {
+        if let url = URL(string: "https://gumroad.com/l/sniper") {
             NSWorkspace.shared.open(url)
         }
     }

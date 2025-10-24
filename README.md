@@ -1,6 +1,28 @@
-# SnipIt - macOS OCR Menu Bar App
+# Sniper - macOS OCR Menu Bar App
 
 A privacy-respecting macOS menu-bar utility to OCR any on-screen region with a single global shortcut (⌘⇧2) and copy the text to clipboard instantly.
+
+## Quick Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/arunim1/sniper.git
+cd sniper
+
+# Build the app
+chmod +x build_app.sh
+./build_app.sh
+
+# Install to Applications folder
+cp -r Sniper.app /Applications/
+
+# Set up auto-launch on login
+mkdir -p ~/Library/LaunchAgents
+cp com.sniper.Sniper.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.sniper.Sniper.plist
+```
+
+The app will now run in the background and launch automatically on login!
 
 ## Features
 
@@ -73,7 +95,7 @@ To create a proper Xcode project for development:
 1. Create a new macOS App project in Xcode
 2. Copy all `.swift` files from `Sources/` to the project
 3. Add `Package.swift` dependencies manually or use SPM integration
-4. Copy `Info.plist` and `SnipIt.entitlements` to the project
+4. Copy `Info.plist` and `Sniper.entitlements` to the project
 5. Configure build settings:
    - Minimum Deployment: macOS 13.0
    - Swift Language Version: 5.10
@@ -123,35 +145,35 @@ private let productID = "YOUR_GUMROAD_PRODUCT_ID"
 # Sign the app
 codesign --deep --force --options runtime \
   --sign "Developer ID Application: Your Name" \
-  --entitlements SnipIt.entitlements \
-  SnipIt.app
+  --entitlements Sniper.entitlements \
+  Sniper.app
 ```
 
 ### Distribution
 
 ```bash
 # Create DMG
-hdiutil create -volname "SnipIt" -srcfolder SnipIt.app -ov -format UDZO SnipIt.dmg
+hdiutil create -volname "Sniper" -srcfolder Sniper.app -ov -format UDZO Sniper.dmg
 
 # Sign DMG
-codesign --sign "Developer ID Application: Your Name" SnipIt.dmg
+codesign --sign "Developer ID Application: Your Name" Sniper.dmg
 
 # Notarize
-xcrun notarytool submit SnipIt.dmg \
+xcrun notarytool submit Sniper.dmg \
   --apple-id "your@email.com" \
   --team-id "TEAM_ID" \
   --password "app-specific-password" \
   --wait
 
 # Staple ticket
-xcrun stapler staple SnipIt.dmg
+xcrun stapler staple Sniper.dmg
 ```
 
 ## Usage
 
 ### First Run
 
-1. Launch SnipIt
+1. Launch Sniper
 2. Complete onboarding
 3. Grant Screen Recording permission in System Settings
 4. Enter license key (or purchase from Gumroad)
@@ -193,7 +215,7 @@ sniper/
 │   ├── PreferencesWindowController.swift
 │   ├── OnboardingWindowController.swift
 │   ├── Info.plist              # App metadata
-│   └── SnipIt.entitlements     # Security entitlements
+│   └── Sniper.entitlements     # Security entitlements
 └── Resources/                   # Assets (if any)
 ```
 
@@ -252,14 +274,14 @@ Target metrics:
 ### "Permission Denied" errors
 
 1. Go to System Settings > Privacy & Security > Screen Recording
-2. Ensure SnipIt is enabled
-3. Restart SnipIt
+2. Ensure Sniper is enabled
+3. Restart Sniper
 
 ### Hotkey not working
 
 1. Check for conflicts with other apps
 2. Try registering a different hotkey in Preferences
-3. Ensure SnipIt is running (menu bar icon visible)
+3. Ensure Sniper is running (menu bar icon visible)
 
 ### OCR accuracy issues
 
@@ -270,12 +292,12 @@ Target metrics:
 
 ## License
 
-This is the source code for SnipIt, a commercial application.
+This is the source code for Sniper, a commercial application.
 License key required from Gumroad for use.
 
 ## Privacy Policy
 
-SnipIt is designed with privacy as a priority:
+Sniper is designed with privacy as a priority:
 - All OCR processing happens locally on your device
 - No screenshots or text data is sent to external servers
 - Network access is only used for license verification

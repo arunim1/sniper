@@ -218,7 +218,7 @@ class LicenseService {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
-            kSecAttrService as String: "com.snipit.license",
+            kSecAttrService as String: "com.sniper.license",
             kSecValueData as String: data
         ]
 
@@ -236,7 +236,7 @@ class LicenseService {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
-            kSecAttrService as String: "com.snipit.license",
+            kSecAttrService as String: "com.sniper.license",
             kSecReturnData as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
@@ -257,7 +257,7 @@ class LicenseService {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
-            kSecAttrService as String: "com.snipit.license"
+            kSecAttrService as String: "com.sniper.license"
         ]
 
         SecItemDelete(query as CFDictionary)

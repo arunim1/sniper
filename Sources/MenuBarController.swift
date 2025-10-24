@@ -40,7 +40,7 @@ class MenuBarController {
         if let button = statusItem.button {
             // Use SF Symbol for menu bar icon
             let config = NSImage.SymbolConfiguration(pointSize: 14, weight: .regular)
-            let image = NSImage(systemSymbolName: "doc.text.viewfinder", accessibilityDescription: "SnipIt")
+            let image = NSImage(systemSymbolName: "doc.text.viewfinder", accessibilityDescription: "Sniper")
             image?.isTemplate = true
             button.image = image?.withSymbolConfiguration(config)
         }

@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "SnipIt",
+    name: "Sniper",
     platforms: [
         .macOS(.v13)
     ],
     products: [
         .executable(
-            name: "SnipIt",
-            targets: ["SnipIt"]
+            name: "Sniper",
+            targets: ["Sniper"]
         )
     ],
     dependencies: [
@@ -18,7 +18,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "SnipIt",
+            name: "Sniper",
             dependencies: [
                 // .product(name: "Sparkle", package: "Sparkle")
             ],

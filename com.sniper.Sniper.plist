@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.snipit.SnipIt</string>
+    <string>com.sniper.Sniper</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Applications/SnipIt.app/Contents/MacOS/SnipIt</string>
+        <string>/Applications/Sniper.app/Contents/MacOS/Sniper</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <false/>
     <key>StandardOutPath</key>
-    <string>/tmp/snipit.log</string>
+    <string>/tmp/sniper.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/snipit.error.log</string>
+    <string>/tmp/sniper.error.log</string>
 </dict>
 </plist>
