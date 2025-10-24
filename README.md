@@ -1,6 +1,8 @@
 # Sniper - macOS OCR Menu Bar App
 
-A privacy-respecting macOS menu-bar utility to OCR any on-screen region with a single global shortcut (⌘⇧2) and copy the text to clipboard instantly.
+All vibe-coded (in ~4 prompts?) from here on out, cheers. 
+
+A privacy-respecting macOS menu-bar utility to OCR any on-screen region with a single global shortcut (⌘⇧2) and copy the text to clipboard instantly. 
 
 ## Quick Installation
 
