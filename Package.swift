@@ -12,20 +12,12 @@ let package = Package(
             targets: ["Sniper"]
         )
     ],
-    dependencies: [
-        // Sparkle temporarily disabled for initial build
-        // .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0")
-    ],
+    dependencies: [],
     targets: [
         .executableTarget(
             name: "Sniper",
-            dependencies: [
-                // .product(name: "Sparkle", package: "Sparkle")
-            ],
-            path: "Sources",
-            resources: [
-                .process("Resources")
-            ]
+            dependencies: [],
+            path: "Sources"
         )
     ]
 )

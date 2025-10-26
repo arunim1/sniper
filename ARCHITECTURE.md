@@ -2,60 +2,49 @@
 
 ## Overview
 
-Sniper is a macOS menu bar app that performs OCR on screen regions.
+Sniper is a minimal macOS menu bar app for OCR text extraction from screen regions.
 
 ## Components
 
-### Core Services
-- **AppDelegate**: App lifecycle and coordination
-- **HotkeyService**: Global hotkey registration (Carbon Events)
-- **CaptureController**: Orchestrates capture flow
-- **SelectionOverlay**: Rubber-band selection UI
-- **OcrService**: Vision framework OCR
-- **ClipboardService**: Clipboard operations
-- **HUDController**: Toast notifications
+### Core (7 files)
+- **main.swift**: Entry point
+- **AppDelegate.swift**: Lifecycle and service initialization
+- **HotkeyService.swift**: Global hotkey (⌘⇧2) via Carbon Events
+- **CaptureController.swift**: Orchestrates capture flow
+- **SelectionOverlay.swift**: Rubber-band selection UI
+- **OcrService.swift**: Vision framework OCR
+- **ClipboardService.swift**: Clipboard operations
+- **HUDController.swift**: Toast notifications
 
-### UI
-- **MenuBarController**: Status item and menu
-- **PreferencesWindowController**: Settings (SwiftUI)
-- **OnboardingWindowController**: First-run flow (SwiftUI)
-- **LicenseWindowController**: License activation (SwiftUI)
+### UI (2 files)
+- **MenuBarController.swift**: Menu bar with Capture/Quit
+- **PreferencesWindowController.swift**: Settings (SwiftUI)
 
-### Data
-- **PreferencesStore**: UserDefaults wrapper
-- **LicenseService**: Gumroad integration + Keychain
+### Data (1 file)
+- **PreferencesStore.swift**: UserDefaults wrapper
 
-## Data Flow
+## Flow
 
 ```
-User presses ⌘⇧2
+⌘⇧2 pressed
   → HotkeyService callback
-  → AppDelegate.handleCapture()
-  → Check permissions
-  → CaptureController.startCapture()
+  → AppDelegate starts capture
   → Show SelectionOverlay
-  → User selects region
-  → Capture screen (ScreenCaptureKit)
-  → OcrService.recognize(image)
-  → ClipboardService.copy(text)
-  → HUDController.show(message)
+  → User drags selection
+  → Capture region (ScreenCaptureKit)
+  → OCR text (Vision)
+  → Copy to clipboard
+  → Show HUD
 ```
 
-## Technologies
+## Stack
 
-- Swift 5.10
-- AppKit (menu bar, windows)
-- SwiftUI (preferences, onboarding)
-- ScreenCaptureKit (screen capture)
-- Vision (OCR)
-- Carbon Events (hotkeys)
-- Keychain (license storage)
+- Swift 5.10, AppKit + SwiftUI
+- ScreenCaptureKit (macOS 13+)
+- Vision framework
+- Carbon Events
+- Zero dependencies
 
 ## Permissions
 
-- **Screen Recording**: Required for capture (TCC prompt)
-- **Network**: Optional, for license verification
-
-## Build
-
-Uses Swift Package Manager with minimal dependencies.
+Screen Recording (TCC prompt on first use)

@@ -31,7 +31,6 @@ struct PreferencesView: View {
                 Text("General").tag(0)
                 Text("Shortcut").tag(1)
                 Text("OCR").tag(2)
-                Text("License").tag(3)
             }
             .pickerStyle(.segmented)
             .padding()
@@ -47,8 +46,6 @@ struct PreferencesView: View {
                     ShortcutPreferencesView(preferencesStore: preferencesStore)
                 case 2:
                     OCRPreferencesView(preferencesStore: preferencesStore)
-                case 3:
-                    LicensePreferencesView()
                 default:
                     EmptyView()
                 }
@@ -172,18 +169,3 @@ struct OCRPreferencesView: View {
     }
 }
 
-struct LicensePreferencesView: View {
-    var body: some View {
-        Form {
-            Section {
-                Text("License management is available from the menu bar.")
-                    .foregroundColor(.secondary)
-            } header: {
-                Text("License")
-                    .font(.headline)
-            }
-            .padding()
-        }
-        .formStyle(.grouped)
-    }
-}
