@@ -1,15 +1,15 @@
 .PHONY: build clean run test xcode help
 
 # Variables
-APP_NAME = SnipIt
-BUNDLE_ID = com.snipit.SnipIt
-SCHEME = SnipIt
+APP_NAME = Sniper
+BUNDLE_ID = com.sniper.Sniper
+SCHEME = Sniper
 BUILD_DIR = .build
 RELEASE_DIR = $(BUILD_DIR)/release
 DERIVED_DATA = $(BUILD_DIR)/DerivedData
 
 help:
-	@echo "SnipIt Build System"
+	@echo "Sniper Build System"
 	@echo ""
 	@echo "Available targets:"
 	@echo "  make build      - Build release version"

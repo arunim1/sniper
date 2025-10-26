@@ -4,12 +4,13 @@
       "Bash(awk '{print $9, $5}')",
       "Bash(swift package generate-xcodeproj)",
       "Bash(swift build)",
-      "Bash(killall SnipIt)",
+      "Bash(killall Sniper)",
       "Bash(chmod +x build_app.sh)",
       "Bash(./build_app.sh)",
       "Read(//Applications/**)",
       "Bash(launchctl list:*)",
-      "Bash(launchctl unload:*)"
+      "Bash(launchctl unload:*)",
+      "Bash(launchctl load:*)"
     ],
     "deny": [],
     "ask": []
