@@ -5,6 +5,7 @@ class CaptureController {
     private let ocrService: OcrService
     private let clipboardService: ClipboardService
     private var overlayWindow: SelectionOverlay?
+    private var previousApp: NSRunningApplication?
 
     init(ocrService: OcrService, clipboardService: ClipboardService) {
         self.ocrService = ocrService
@@ -13,9 +14,13 @@ class CaptureController {
 
     @MainActor
     func startCapture() async {
+        // Save the currently active application to restore later
+        previousApp = NSWorkspace.shared.frontmostApplication
+
         // Get the screen where mouse cursor is currently located
         guard let currentScreen = NSScreen.main ?? NSScreen.screens.first else {
             showError("No screen available")
+            restorePreviousApp()
             return
         }
 
@@ -35,10 +40,22 @@ class CaptureController {
                         await self.captureAndProcessRegion(rect, on: currentScreen)
                     }
                     self.overlayWindow = nil
+                    self.restorePreviousApp()
                     continuation.resume()
                 }
             }
         }
+    }
+
+    @MainActor
+    private func restorePreviousApp() {
+        guard let app = previousApp else { return }
+
+        // Activate the previous app to restore user's workflow
+        app.activate(options: [.activateIgnoringOtherApps])
+
+        // Clear the reference
+        previousApp = nil
     }
 
     @MainActor

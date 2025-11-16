@@ -36,6 +36,7 @@ class SelectionOverlay: NSWindow {
         logPerf("Overlay show() called")
         self.completion = completion
         makeKeyAndOrderFront(nil)
+        makeFirstResponder(overlayView)
         NSCursor.crosshair.set()
         DispatchQueue.main.async { [weak self] in
             self?.logPerf("Overlay ready")
@@ -80,6 +81,10 @@ class SelectionOverlayView: NSView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var acceptsFirstResponder: Bool {
+        return true
     }
 
     private func setupTrackingArea() {
