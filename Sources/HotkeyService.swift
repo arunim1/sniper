@@ -26,6 +26,7 @@ class HotkeyService {
         InstallEventHandler(
             GetApplicationEventTarget(),
             { (nextHandler, event, userData) -> OSStatus in
+                HotkeyService.logPerf("Hotkey pressed")
                 HotkeyService.instance?.callback()
                 return noErr
             },
@@ -54,6 +55,23 @@ class HotkeyService {
         if let eventHandler = eventHandler {
             RemoveEventHandler(eventHandler)
             self.eventHandler = nil
+        }
+    }
+
+    private static func logPerf(_ message: String) {
+        let timestamp = Date().timeIntervalSince1970
+        let logMessage = "[\(timestamp)] \(message)\n"
+        let logPath = "/tmp/sniper_perf.log"
+        if let data = logMessage.data(using: .utf8) {
+            if FileManager.default.fileExists(atPath: logPath) {
+                if let fileHandle = FileHandle(forWritingAtPath: logPath) {
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(data)
+                    fileHandle.closeFile()
+                }
+            } else {
+                try? data.write(to: URL(fileURLWithPath: logPath))
+            }
         }
     }
 }
