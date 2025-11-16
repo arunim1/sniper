@@ -32,10 +32,23 @@ class SelectionOverlay: NSWindow {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var canBecomeKey: Bool {
+        return true
+    }
+
+    override var canBecomeMain: Bool {
+        return true
+    }
+
     func show(completion: @escaping (CGRect?) -> Void) {
         logPerf("Overlay show() called")
         self.completion = completion
+
+        // Activate the app to ensure it can receive keyboard events
+        NSApplication.shared.activate(ignoringOtherApps: true)
+
         makeKeyAndOrderFront(nil)
+        makeFirstResponder(overlayView)
         NSCursor.crosshair.set()
         DispatchQueue.main.async { [weak self] in
             self?.logPerf("Overlay ready")
@@ -80,6 +93,10 @@ class SelectionOverlayView: NSView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var acceptsFirstResponder: Bool {
+        return true
     }
 
     private func setupTrackingArea() {
