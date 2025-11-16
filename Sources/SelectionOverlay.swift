@@ -3,8 +3,10 @@ import Cocoa
 class SelectionOverlay: NSWindow {
     private let overlayView: SelectionOverlayView
     private var completion: ((CGRect?) -> Void)?
+    let overlayScreen: NSScreen
 
     init(screen: NSScreen) {
+        self.overlayScreen = screen
         let frame = screen.frame
         overlayView = SelectionOverlayView(frame: frame)
 
@@ -16,7 +18,8 @@ class SelectionOverlay: NSWindow {
         )
 
         self.contentView = overlayView
-        self.level = .screenSaver
+        // Use highest possible window level for immediate compositor priority
+        self.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
         self.backgroundColor = .clear
         self.isOpaque = false
         self.hasShadow = false
@@ -41,35 +44,29 @@ class SelectionOverlay: NSWindow {
     }
 
     func show(completion: @escaping (CGRect?) -> Void) {
-        logPerf("Overlay show() called")
+        PerformanceTracker.recordTiming("show() called")
         self.completion = completion
 
-        // Activate the app to ensure it can receive keyboard events
-        NSApplication.shared.activate(ignoringOtherApps: true)
-
+        // Display window FIRST, before app activation
         makeKeyAndOrderFront(nil)
+        PerformanceTracker.recordTiming("After makeKeyAndOrderFront")
+
+        // Force immediate window display - flush window server
+        self.display()
+        NSAnimationContext.current.duration = 0
+        PerformanceTracker.recordTiming("After window display flush")
+
         makeFirstResponder(overlayView)
         NSCursor.crosshair.set()
-        DispatchQueue.main.async { [weak self] in
-            self?.logPerf("Overlay ready")
-        }
-    }
+        PerformanceTracker.recordTiming("After cursor change")
 
-    private func logPerf(_ message: String) {
-        let timestamp = Date().timeIntervalSince1970
-        let logMessage = "[\(timestamp)] \(message)\n"
-        let logPath = "/tmp/sniper_perf.log"
-        if let data = logMessage.data(using: .utf8) {
-            if FileManager.default.fileExists(atPath: logPath) {
-                if let fileHandle = FileHandle(forWritingAtPath: logPath) {
-                    fileHandle.seekToEndOfFile()
-                    fileHandle.write(data)
-                    fileHandle.closeFile()
-                }
-            } else {
-                try? data.write(to: URL(fileURLWithPath: logPath))
-            }
-        }
+        // Activate app AFTER window is visible to avoid blocking
+        PerformanceTracker.recordTiming("Before app activation")
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        PerformanceTracker.recordTiming("After app activation")
+
+        PerformanceTracker.recordTiming("Overlay ready for interaction")
+        PerformanceTracker.finishActivation()
     }
 
     private func finishSelection(with rect: CGRect?) {

@@ -6,6 +6,7 @@ class CaptureController {
     private let clipboardService: ClipboardService
     private var overlayWindow: SelectionOverlay?
     private var previousApp: NSRunningApplication?
+    private var prewarmedOverlay: SelectionOverlay?
 
     init(ocrService: OcrService, clipboardService: ClipboardService) {
         self.ocrService = ocrService
@@ -13,7 +14,16 @@ class CaptureController {
     }
 
     @MainActor
+    func prewarmOverlay() {
+        // Pre-create overlay window at launch for instant activation
+        guard let screen = NSScreen.main ?? NSScreen.screens.first else { return }
+        prewarmedOverlay = SelectionOverlay(screen: screen)
+    }
+
+    @MainActor
     func startCapture() async {
+        PerformanceTracker.recordTiming("MainActor dispatch complete")
+
         // Save the currently active application to restore later
         previousApp = NSWorkspace.shared.frontmostApplication
 
@@ -24,8 +34,19 @@ class CaptureController {
             return
         }
 
-        // Show selection overlay
-        let overlay = SelectionOverlay(screen: currentScreen)
+        PerformanceTracker.recordTiming("Screen detection complete")
+
+        // Use prewarmed overlay if available and matches screen, otherwise create new
+        let overlay: SelectionOverlay
+        if let prewarmed = prewarmedOverlay, prewarmed.overlayScreen.frame == currentScreen.frame {
+            overlay = prewarmed
+            prewarmedOverlay = nil
+            PerformanceTracker.recordTiming("Using prewarmed overlay")
+        } else {
+            overlay = SelectionOverlay(screen: currentScreen)
+            PerformanceTracker.recordTiming("Created new overlay")
+        }
+
         self.overlayWindow = overlay
 
         return await withCheckedContinuation { continuation in
@@ -41,6 +62,10 @@ class CaptureController {
                     }
                     self.overlayWindow = nil
                     self.restorePreviousApp()
+
+                    // Recreate prewarmed overlay for next activation
+                    self.prewarmOverlay()
+
                     continuation.resume()
                 }
             }

@@ -29,6 +29,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
+        // Prewarm overlay window for instant activation
+        Task { @MainActor in
+            self.captureController?.prewarmOverlay()
+        }
+
         let endTime = Date().timeIntervalSince1970
         let elapsed = (endTime - startTime) * 1000
         logPerf("App ready in \(String(format: "%.2f", elapsed))ms")

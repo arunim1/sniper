@@ -15,7 +15,8 @@
       "Bash(chmod:*)",
       "Bash(./run_perf_tests.sh:*)",
       "Bash(./test_launch_only.sh)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(open Sniper.app)"
     ],
     "deny": [],
     "ask": []
