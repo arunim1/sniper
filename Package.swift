@@ -17,7 +17,8 @@ let package = Package(
         .executableTarget(
             name: "Sniper",
             dependencies: [],
-            path: "Sources"
+            path: "Sources",
+            exclude: ["Info.plist", "Sniper.entitlements"]
         )
     ]
 )
