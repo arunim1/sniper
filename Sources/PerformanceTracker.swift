@@ -2,11 +2,15 @@ import Foundation
 
 /// High-precision performance tracker for measuring activation latency
 class PerformanceTracker {
+    /// Set to true to enable performance logging (disabled by default for production)
+    static let enabled = false
+
     private static var activationStart: CFAbsoluteTime?
     private static var timings: [(String, CFAbsoluteTime)] = []
 
     /// Start tracking a new activation cycle
     static func startActivation() {
+        guard enabled else { return }
         activationStart = CFAbsoluteTimeGetCurrent()
         timings.removeAll()
         recordTiming("Hotkey pressed")
@@ -14,6 +18,7 @@ class PerformanceTracker {
 
     /// Record a timing checkpoint
     static func recordTiming(_ label: String) {
+        guard enabled else { return }
         guard let start = activationStart else { return }
         let elapsed = (CFAbsoluteTimeGetCurrent() - start) * 1000 // Convert to ms
         timings.append((label, elapsed))
@@ -21,6 +26,7 @@ class PerformanceTracker {
 
     /// Finish tracking and log results
     static func finishActivation() {
+        guard enabled else { return }
         guard !timings.isEmpty else { return }
 
         var report = "\n=== Activation Performance ===\n"
